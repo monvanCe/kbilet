@@ -1,47 +1,20 @@
-# Getting Started with Create React App
+Projeyi indiren kişinin ilk yapması gereken kök dizininde terminal açıp alttaki kodu yazmaktır:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### `npm install`
 
-## Available Scripts
-
-In the project directory, you can run:
+Ardından projeyi başlatmak için aynı konumda terminale alttaki kodu yazmalıdır:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+uygulama geliştirici modda başlayacaktır. uygulamayı test etmeye başlayabilirsiniz. varsayılan olarak en son komutu yazmanızın ardından tarayıcınızda sekmede yaptığım uygulamayı göreceksiniz.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+uygulamayı yazarken state management etmek için jotai adlı 3. parti bir kütüphane kullandım. bu kütüphanenin öğrenmesi kolaydır ve uygulamaya dökmekte kolaydır.
+bu uygulam sayesinde uzun configurasyonlar yazmak zorunda kalmıyorsunuz. ayrıca size local verileri yönetmenize de imkan veriyor. normal şartlarda context yapısını kendim kurardım bu sayede yönetimi
+kolay olurdu fakat tabi bunun zorlukları da var. jotai bütün herşeyi benim için çözüyor.
+navigasyon yönetimi için react-router-dom adlı resmi kütüphaneyi kullandım. olabildiğince kütüphane yüklemekten kaçınmak istedim.
+son olarak bootstrap 4.6.2 kullandım. bu uzun uzun stil yazmaktan kurtardı beni. alışık olduğum bir şekilde sadece className parametresini doldurarak istediğim gibi tasarımı düzenlememe yardımcı oldu.
+tabi yaptığım uygulama da çok gelişmiş bir tasarım olmasa da bootstrap 4.6.2 aslında her şeyi yapabilmemize olanak sağlıyor.
+son olarak otobüs şemasından bahsetmek istiyorum. otobüs'ün şeklini bir svg dosyası şeklinde internetten indirdim. tabi bu indirdiğim haliyle jsx kullanımına uygun değildi. gerekli düzeltmeleri yapmam gerekti. ardından dinamik olarak yönetmek için bir component içinde svg dosyasının sahip olduğu className'leri yönettim. aslında sonradan bazı classlar oluşturdum. gerekli durumlarda bu classları kullanmasını if koşulu ile sağladım.
+uygulama da gerekli kısımlarda veriler javascript ile yönetilirken gerekli kısımlarda parametreler ile veri alışverişi sağlanmıştır. bu koşullara göre güvenlik ve performans arasında seçim yapmamızı gerekiyor.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
 # kbilet
