@@ -10,6 +10,7 @@ import Home from './screens/Home/Home';
 import InQuery from './screens/InQuery/InQuery';
 import Trip from './screens/Trip/Trip';
 import Payment from './screens/Payment/Payment';
+import Process from './screens/Process/Process';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="inquery" element={<InQuery />} />
         <Route path="trip" element={<Trip />} />
         <Route path="payment" element={<Payment />} />
+        <Route path="process" element={<Process />} />
       </Routes>
     </BrowserRouter>
   );

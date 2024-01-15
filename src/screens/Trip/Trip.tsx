@@ -21,42 +21,32 @@ function Trip() {
 
   const seatOnClick = (seatNumber: number) => {
     console.log(selectedSeats);
-    if (trip?.seats[seatNumber - 1] == 0 && selectedSeats.length < 5) {
+    if (trip?.seats[seatNumber - 1] === 0 && selectedSeats.length < 5) {
       const isEven = seatNumber % 2 === 0;
 
       if (isEven) {
         if (
-          trip.seats[seatNumber - 2] == 0 ||
-          trip.seats[seatNumber - 2] == user[0].gender
+          trip.seats[seatNumber - 2] === 0 ||
+          trip.seats[seatNumber - 2] === user[0].gender
         ) {
-          const el = selectedSeats.find((d) => d == seatNumber);
-
-          if (el) {
-            alert('you have already choose this seat');
-          } else {
-            setSelectedSeats([...selectedSeats, seatNumber]);
-          }
+          setSelectedSeats([...selectedSeats, seatNumber]);
         } else {
           alert('You cannot take the seat next to the opposite gender.');
         }
       } else {
         if (
-          trip.seats[seatNumber] == 0 ||
-          trip.seats[seatNumber] == user[0].gender
+          trip.seats[seatNumber] === 0 ||
+          trip.seats[seatNumber] === user[0].gender
         ) {
-          const el = selectedSeats.find((d) => d == seatNumber);
-
-          if (el) {
-            const removedSeat = selectedSeats.filter((d) => d !== seatNumber);
-
-            setSelectedSeats(removedSeat);
-          } else {
-            setSelectedSeats([...selectedSeats, seatNumber]);
-          }
+          setSelectedSeats([...selectedSeats, seatNumber]);
         } else {
           alert('You cannot take the seat next to the opposite gender.');
         }
       }
+    } else if (selectedSeats.find((d: number) => d === seatNumber)) {
+      const removedSeat = selectedSeats.filter((d) => d !== seatNumber);
+
+      setSelectedSeats(removedSeat);
     } else {
       alert('maksimum 5 koltuk seçebilirsiniz');
     }
@@ -78,7 +68,11 @@ function Trip() {
             <p className="mt-3">Boş</p>
           </div>
           <div className="border flex-grow-1 mr-2 rounded p-1 overflow-auto d-flex">
-            <SVGComponent trip={trip} seatOnClick={seatOnClick} />
+            <SVGComponent
+              trip={trip}
+              seatOnClick={seatOnClick}
+              selectedSeats={selectedSeats}
+            />
           </div>
         </div>
         <div className="w-25 d-flex flex-column align-items-end justify-content-between">
@@ -94,7 +88,9 @@ function Trip() {
             className="btn btn-primary"
             onClick={() => {
               navigate(
-                `/payment?price=${trip && trip.price * selectedSeats.length}`
+                `/payment?selectedSeats=${selectedSeats.join('-')}&tripID=${
+                  trip?.tripID
+                }&price=${trip && trip.price * selectedSeats.length}`
               );
             }}
           >

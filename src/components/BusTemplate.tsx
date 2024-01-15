@@ -1,7 +1,11 @@
 import * as React from 'react';
 const SVGComponent = (props: any) => {
   const dynamicBackground = (seatNumber: number) => {
-    if (props.trip.seats[seatNumber - 1] == 0) {
+    const el = props.selectedSeats.find((d: number) => d === seatNumber);
+
+    if (el) {
+      return 'selectedSeat';
+    } else if (props.trip.seats[seatNumber - 1] === 0) {
       return 'st0';
     } else {
       return props.trip.seats[seatNumber - 1];
@@ -9,7 +13,7 @@ const SVGComponent = (props: any) => {
   };
 
   const dynamicText = (seatNumber: number) => {
-    if (props.trip.seats[seatNumber - 1] == 0) {
+    if (props.trip.seats[seatNumber - 1] === 0) {
       return 'st2 st3';
     } else {
       return 'unavailable st3';
@@ -28,7 +32,7 @@ const SVGComponent = (props: any) => {
     >
       <style type="text/css">
         {
-          "\n\t.st0{fill:none;stroke:#000000;stroke-miterlimit:10;}\n\t.st1{fill:none;}\n\t.st2{cursor: pointer;font-family:'MyriadPro-Regular';}\n\t.st3{font-size:15px;}\n\t.st4{fill:none;stroke:#000000;stroke-miterlimit:10;stroke-dasharray:4.0229,4.0229;}\n\t.st5{fill:none;stroke:#000000;stroke-miterlimit:10;stroke-dasharray:4;}\n\t.female{fill: #e03444;stroke: #000000;stroke-miterlimit:10;stroke-dasharray:4.0229,4.0229;}\n\t.male{fill: #18a4bc;stroke: #000000;stroke-miterlimit:10;stroke-dasharray:4.0229,4.0229;}\n\t.unavailable{fill: #fff;font-family:'MyriadPro-Regular';cursor: default;}\n"
+          "\n\t.st0{fill:none;stroke:#000000;stroke-miterlimit:10;}\n\t.st1{fill:none;}\n\t.st2{cursor: pointer;font-family:'MyriadPro-Regular';}\n\t.st3{font-size:15px;}\n\t.st4{fill:none;stroke:#000000;stroke-miterlimit:10;stroke-dasharray:4.0229,4.0229;}\n\t.st5{fill:none;stroke:#000000;stroke-miterlimit:10;stroke-dasharray:4;}\n\t.female{fill: #e03444;stroke: #000000;stroke-miterlimit:10;stroke-dasharray:4.0229,4.0229;}\n\t.male{fill: #18a4bc;stroke: #000000;stroke-miterlimit:10;stroke-dasharray:4.0229,4.0229;}\n\t.selectedSeat{fill: #ffea00;stroke: #000000;stroke-miterlimit:10;stroke-dasharray:4.0229,4.0229;}\n\t.unavailable{fill: #fff;font-family:'MyriadPro-Regular';cursor: default;}\n"
         }
       </style>
 

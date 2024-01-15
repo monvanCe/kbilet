@@ -1,33 +1,53 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import jsonData from '../../datas/trips.json';
+import { tripInstance } from '../../datas/interfaces';
+import { useAtom } from 'jotai';
+import { usersAtom } from '../../datas/jotaiStates';
 
 function Payment() {
+  const [user] = useAtom(usersAtom);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const price = queryParams.get('price');
+  const selectedSeats = queryParams.get('selectedSeats');
+  const tripID = Number(queryParams.get('tripID'));
+  const trip = jsonData.trips.find((d: tripInstance) => d.tripID === tripID);
+
+  const handlePayment = () => {
+    navigate('/process');
+  };
+
   return (
     <div className="d-flex justify-content-center align-items-center bg-dark vh-100">
       <div className="w-75 h-75 bg-light rounded p-4 d-flex flex-row">
-        <div className='d-flex flex-column justify-content-between w-50 pr-3'>
+        <div className="d-flex flex-column justify-content-between w-50 pr-3">
           <div>
-            <h3>{`X şehri --> Y şehri`}</h3>
-            <p>{`Sefer Tarihi: 20 Ocak 2024`}</p>
+            <h3>{`${trip?.departureCity} --> ${trip?.arrivalCity}`}</h3>
+            <p>{`Sefer Tarihi: ${trip?.departureTime.replace('T', ' / ')}`}</p>
           </div>
           <div>
             <h5>Yolcular:</h5>
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className='d-flex flex-row'>
-                {'Passenger ' + (i + 1)}
+            {[...Array(trip && Number(price) / trip?.price)].map((_, i) => (
+              <div key={i} className="d-flex flex-row">
+                {user[0].firstName + ' ' + user[0].lastName}
               </div>
             ))}
           </div>
         </div>
-        <div className='d-flex flex-column justify-content-between w-50 pl-3 border-left'>
+        <div className="d-flex flex-column justify-content-between w-50 pl-3 border-left">
           <div>
             <h5>Seçilen Koltuklar:</h5>
-            <p>12 - 25 - 34</p>
+            <p>{selectedSeats}</p>
           </div>
           <div>
             <h5>Toplam Fiyat:</h5>
-            <p>1626 TL</p>
+            <p>{price}</p>
           </div>
-          <form>
+          <form onSubmit={handlePayment}>
             <div className="form-group">
               <label htmlFor="cardName">Kart Üzerindeki İsim</label>
               <input
@@ -66,7 +86,7 @@ function Payment() {
                 />
               </div>
             </div>
-            <div className='w-100 d-flex justify-content-end'>
+            <div className="w-100 d-flex justify-content-end">
               <button type="submit" className="btn btn-primary">
                 Ödeme Yap
               </button>
