@@ -10,7 +10,7 @@ function Login() {
     email: '',
     password: '',
   });
-  const [users] = useAtom(usersAtom);
+  const [users, setUsers] = useAtom(usersAtom);
 
   const handleChange = (e: any) => {
     const { id, value } = e.target;
@@ -28,6 +28,7 @@ function Login() {
     if (el) {
       if (el.password === formData.password) {
         alert('succesfully logined');
+        setUsers([el]);
         navigate('/home');
       } else {
         alert('password incorrect');

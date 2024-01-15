@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import jsonData from '../../datas/trips.json';
 import { tripInstance } from '../../datas/interfaces';
 import SVGComponent from '../../components/BusTemplate';
+import { useAtom } from 'jotai';
+import { usersAtom } from '../../datas/jotaiStates';
 
 function Trip() {
+  const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
+  const [user] = useAtom(usersAtom);
+
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -15,7 +20,46 @@ function Trip() {
   const trip = jsonData.trips.find((d: tripInstance) => d.tripID === tripID);
 
   const seatOnClick = (seatNumber: number) => {
-    console.log('seat clicked', seatNumber);
+    console.log(selectedSeats);
+    if (trip?.seats[seatNumber - 1] == 0 && selectedSeats.length < 5) {
+      const isEven = seatNumber % 2 === 0;
+
+      if (isEven) {
+        if (
+          trip.seats[seatNumber - 2] == 0 ||
+          trip.seats[seatNumber - 2] == user[0].gender
+        ) {
+          const el = selectedSeats.find((d) => d == seatNumber);
+
+          if (el) {
+            alert('you have already choose this seat');
+          } else {
+            setSelectedSeats([...selectedSeats, seatNumber]);
+          }
+        } else {
+          alert('You cannot take the seat next to the opposite gender.');
+        }
+      } else {
+        if (
+          trip.seats[seatNumber] == 0 ||
+          trip.seats[seatNumber] == user[0].gender
+        ) {
+          const el = selectedSeats.find((d) => d == seatNumber);
+
+          if (el) {
+            const removedSeat = selectedSeats.filter((d) => d !== seatNumber);
+
+            setSelectedSeats(removedSeat);
+          } else {
+            setSelectedSeats([...selectedSeats, seatNumber]);
+          }
+        } else {
+          alert('You cannot take the seat next to the opposite gender.');
+        }
+      }
+    } else {
+      alert('maksimum 5 koltuk seçebilirsiniz');
+    }
   };
 
   return (
@@ -40,16 +84,18 @@ function Trip() {
         <div className="w-25 d-flex flex-column align-items-end justify-content-between">
           <div className="d-flex flex-column align-items-end">
             <p>Seçilen Koltuk</p>
-            <p>15-25-38</p>
+            <p>{selectedSeats.join('-')}</p>
             <p>Adet Fiyat</p>
-            <p>542₺</p>
+            <p>{trip?.price}</p>
             <p>Toplam Fiyat</p>
-            <p>1626</p>
+            <p>{trip && trip.price * selectedSeats.length}</p>
           </div>
           <button
             className="btn btn-primary"
             onClick={() => {
-              navigate('/payment');
+              navigate(
+                `/payment?price=${trip && trip.price * selectedSeats.length}`
+              );
             }}
           >
             Öde
